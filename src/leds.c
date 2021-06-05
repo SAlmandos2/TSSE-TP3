@@ -1,14 +1,21 @@
 #include "leds.h"
 
-#define led_inBound( led ) (bool)( led >= LED_OFFSET && led < (LED_COUNT + LED_OFFSET) )
+#define ALL_LEDS_OFF    0x0000
+#define ALL_LEDS_ON     0xFFFF
+#define LED_ON          1
+#define LED_OFFSET      1
+#define LED_COUNT       16
 
+#define led_to_bit( led ) (uint16_t)( LED_ON << (led - LED_OFFSET) )
+
+#define led_inBound( led ) (bool)( led >= LED_OFFSET && led < (LED_COUNT + LED_OFFSET) )
 
 static uint16_t *puerto;
 
 void Leds_Create( uint16_t *puntero )
 {
     puerto = puntero;
-    *puerto = ALL_LEDS_OFF;
+    Leds_TurnOffAll();
 }
 
 void Led_TurnOn( uint8_t led )

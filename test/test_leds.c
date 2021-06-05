@@ -1,6 +1,12 @@
 #include "unity.h"
 #include "leds.h"
 
+#define ALL_LEDS_OFF    0x0000
+#define ALL_LEDS_ON     0xFFFF
+#define LED_ON          1
+#define LED_OFFSET      1
+#define led_to_bit( led ) (uint16_t)( LED_ON << (led - LED_OFFSET) )
+
 #define LED                 5
 #define LED_OUT_OF_BOUNDS   17
 
@@ -59,6 +65,7 @@ void test_TurnOnAllLeds(void)
 // Se pueden apagar todos los LEDs a la vez
 void test_TurnOffAllLeds(void)
 {
+    Led_TurnOn( LED );
     Leds_TurnOffAll();
     TEST_ASSERT_EQUAL_HEX16( ALL_LEDS_OFF, ledsVirtuales );
 }
